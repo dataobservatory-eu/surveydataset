@@ -2,9 +2,16 @@ citHeader("To cite surveydataset in publications use:")
 
 citEntry(
   entry    = "Misc",
+  year = "2022",
+  publisher = "Reprex",
   title    = "surveydataset: An R Package For Findable, Accessible, Interoperable, and Reusable Survey Datasets",
-  author   = person("Daniel","Antal"),
-  url      = "https:://dataset.dataobservatory.eu/" ,
+  author   =   person(given = "Daniel", family = "Antal",
+                      email = "daniel.antal@dataobservatory.eu",
+                      comment = c(ORCID = "0000-0001-7513-6760")
+  ),
+  url      = "https:://surveydataset.dataobservatory.eu/" ,
+  version = "0.1.0",
+  doi  =  "10.5281/zenodo.7013164",
   textVersion = paste(
 
   )

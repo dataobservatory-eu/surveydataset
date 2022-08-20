@@ -6,8 +6,8 @@
 <!-- badges: start -->
 
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7013164.svg)](https://zenodo.org/record/6950435#.YukDAXZBzIU)
-[![devel-version](https://img.shields.io/badge/devel%20version-0.1.0-blue.svg)](https://github.com/dataobservatory-eu/dataset)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7013164.svg)](https://zenodo.org/record/7013164#.YwFmc3ZBzIU)
+[![devel-version](https://img.shields.io/badge/devel%20version-0.1.0-blue.svg)](https://github.com/dataobservatory-eu/surveydataset)
 [![dataobservatory](https://img.shields.io/badge/ecosystem-dataobservatory.eu-3EA135.svg)](https://dataobservatory.eu/)
 [![Follow
 rOpenGov](https://img.shields.io/twitter/follow/ropengov.svg?style=social)](https://twitter.com/intent/follow?screen_name=ropengov)
@@ -16,6 +16,8 @@ author](https://img.shields.io/twitter/follow/digitalmusicobs.svg?style=social)]
 [![Codecov test
 coverage](https://codecov.io/gh/dataobservatory-eu/surveydataset/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dataobservatory-eu/surveydataset?branch=master)
 [![R-CMD-check](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/dataobservatory-eu/surveydataset?branch=master&svg=true)](https://ci.appveyor.com/project/dataobservatory-eu/surveydataset)
 <!-- badges: end -->
 
 The goal of the ‘surveydataset’ package is to create special datasets
@@ -145,6 +147,30 @@ utils::toBibtex(bibentry_dataset(my_survey))
 #>   publisher = {GESIS},
 #>   size = {19.62 kB [19.16 KiB]},
 #> }
+```
+
+## Further work
+
+The `surveydataset` package is in a very early stage of its development.
+For citations please refer to the current development version as:
+
+``` r
+citation('surveydataset')
+#> 
+#> To cite surveydataset in publications use:
+#> 
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Misc{,
+#>     year = {2022},
+#>     publisher = {Reprex},
+#>     title = {surveydataset: An R Package For Findable, Accessible, Interoperable, and Reusable Survey Datasets},
+#>     author = {Daniel Antal},
+#>     url = {https:://surveydataset.dataobservatory.eu/},
+#>     version = {0.1.0},
+#>     doi = {10.5281/zenodo.7013164},
+#>   }
 ```
 
 ## Code of Conduct

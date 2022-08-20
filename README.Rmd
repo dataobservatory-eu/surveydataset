@@ -17,13 +17,14 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7013164.svg)](https://zenodo.org/record/6950435#.YukDAXZBzIU)
-[![devel-version](https://img.shields.io/badge/devel%20version-0.1.0-blue.svg)](https://github.com/dataobservatory-eu/dataset)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7013164.svg)](https://zenodo.org/record/7013164#.YwFmc3ZBzIU)
+[![devel-version](https://img.shields.io/badge/devel%20version-0.1.0-blue.svg)](https://github.com/dataobservatory-eu/surveydataset)
 [![dataobservatory](https://img.shields.io/badge/ecosystem-dataobservatory.eu-3EA135.svg)](https://dataobservatory.eu/)
 [![Follow rOpenGov](https://img.shields.io/twitter/follow/ropengov.svg?style=social)](https://twitter.com/intent/follow?screen_name=ropengov) 
 [![Follow author](https://img.shields.io/twitter/follow/digitalmusicobs.svg?style=social)](https://twitter.com/intent/follow?screen_name=digitalmusicobs)
 [![Codecov test coverage](https://codecov.io/gh/dataobservatory-eu/surveydataset/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dataobservatory-eu/surveydataset?branch=master)
 [![R-CMD-check](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/dataobservatory-eu/surveydataset?branch=master&svg=true)](https://ci.appveyor.com/project/dataobservatory-eu/surveydataset)
 <!-- badges: end -->
 
 The goal of the 'surveydataset' package is to create special datasets for social sciences surveys that are easier to release, exchange and reuse. 
@@ -89,14 +90,23 @@ version(my_survey) <- dataset_attributes[which(dataset_attributes$attribute == "
 
 ```
 
-```{r}
+```{r summarize}
 summary(my_survey)
 ```
 
 
-```{r}
+```{r citation}
 utils::toBibtex(bibentry_dataset(my_survey))
 ```
+
+## Further work
+
+The `surveydataset` package is in a very early stage of its development.  For citations please refer to the current development version as:
+
+```{r citepackage}
+citation('surveydataset')
+```
+
 
 ## Code of Conduct
 
