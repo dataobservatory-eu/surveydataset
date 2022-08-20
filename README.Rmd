@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 [![dataobservatory](https://img.shields.io/badge/ecosystem-dataobservatory.eu-3EA135.svg)](https://dataobservatory.eu/)
 [![Follow rOpenGov](https://img.shields.io/twitter/follow/ropengov.svg?style=social)](https://twitter.com/intent/follow?screen_name=ropengov) 
 [![Follow author](https://img.shields.io/twitter/follow/digitalmusicobs.svg?style=social)](https://twitter.com/intent/follow?screen_name=digitalmusicobs)
+[![Codecov test coverage](https://codecov.io/gh/dataobservatory-eu/surveydataset/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dataobservatory-eu/surveydataset?branch=master)
+[![R-CMD-check](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of the 'surveydataset' package is to create special datasets for social sciences surveys that are easier to release, exchange and reuse. 
@@ -96,3 +98,6 @@ summary(my_survey)
 utils::toBibtex(bibentry_dataset(my_survey))
 ```
 
+## Code of Conduct
+
+Please note that the surveydataset project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

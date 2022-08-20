@@ -6,16 +6,19 @@
 <!-- badges: start -->
 
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6992467.svg)](https://zenodo.org/record/6950435#.YukDAXZBzIU)
-[![devel-version](https://img.shields.io/badge/devel%20version-0.1.7-blue.svg)](https://github.com/dataobservatory-eu/dataset)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7013164.svg)](https://zenodo.org/record/6950435#.YukDAXZBzIU)
+[![devel-version](https://img.shields.io/badge/devel%20version-0.1.0-blue.svg)](https://github.com/dataobservatory-eu/dataset)
 [![dataobservatory](https://img.shields.io/badge/ecosystem-dataobservatory.eu-3EA135.svg)](https://dataobservatory.eu/)
 [![Follow
 rOpenGov](https://img.shields.io/twitter/follow/ropengov.svg?style=social)](https://twitter.com/intent/follow?screen_name=ropengov)
 [![Follow
 author](https://img.shields.io/twitter/follow/digitalmusicobs.svg?style=social)](https://twitter.com/intent/follow?screen_name=digitalmusicobs)
+[![Codecov test
+coverage](https://codecov.io/gh/dataobservatory-eu/surveydataset/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dataobservatory-eu/surveydataset?branch=master)
+[![R-CMD-check](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dataobservatory-eu/surveydataset/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of the ‘sruveydataset’ package is to create special datasets
+The goal of the ‘surveydataset’ package is to create special datasets
 for social sciences surveys that are easier to release, exchange and
 reuse.
 
@@ -143,3 +146,10 @@ utils::toBibtex(bibentry_dataset(my_survey))
 #>   size = {19.62 kB [19.16 KiB]},
 #> }
 ```
+
+## Code of Conduct
+
+Please note that the surveydataset project is released with a
+[Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

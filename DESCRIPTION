@@ -23,6 +23,7 @@ Imports:
 Remotes: 
     dataobservatory-eu/dataset
 Suggests: 
+    covr,
     here,
     knitr,
     rmarkdown,
