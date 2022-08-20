@@ -1,0 +1,31 @@
+Package: surveydataset
+Title: Findable, Accessible, Interoperable, and Reusable Survey Datasets
+Date: 2022-08-21
+Version: 0.1.0
+Authors@R: 
+    person(given = "Daniel", family = "Antal", 
+           email = "daniel.antal@dataobservatory.eu", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7513-6760")
+           )
+Description: The aim of the 'sruveydataset' package is to create special datasets for social 
+   sciences surveys that are easier to release, exchange and reuse. 
+URL: https://surveydataset.dataobservatory.eu/
+BugReports: https://github.com/dataobservatory-eu/surveydataset/issues
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports: 
+    dataset (>= 0.1.7.2),
+    declared,
+    haven
+Remotes: 
+    dataobservatory-eu/dataset
+Suggests: 
+    here,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr

@@ -1,0 +1,83 @@
+---
+title: "Motivation of the surveydata R Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Motivation of the surveydata R Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(surveydataset)
+```
+
+```{r import, message=FALSE}
+require(haven)
+path <- system.file("ZA5688_v6_sample.sav", package = "surveydataset")
+survey_raw <- read_spss_declared(path)
+```
+
+We have created a wrapper around [haven::read_spss()](https://haven.tidyverse.org/reference/read_spss.html) and `declared::as_declared()` to read in surveys in a less ambigous format:
+
+
+```{r declared}
+summary(as.factor(survey_raw$d25))
+summary(survey_raw$d25)
+```
+
+## Remove constans {#remove-constants}
+
+```{r reduce-survey}
+my_survey <- survey_raw[, c(1:5, 7, 10:12, 33)] # Only to keep example easier to read
+head(my_survey)
+```
+
+```{r remove-constants}
+my_survey <- constant_to_attributes(x = my_survey, constant_columns = 1:5)
+head(my_survey)
+```
+
+```{r dataset-level-attributes}
+dataset_attributes <- attr(my_survey, "datasetAttributes")
+dataset_attributes
+```
+
+## Create a well-defined dataset
+
+```{r}
+library(dataset)
+my_survey <- dataset(
+  my_survey,
+  Dimensions = c("isocntry", "d25"),
+  Measures = "qb1_1", 
+  Attributes = "wextra", "caseid", 
+  Identifier =  dataset_attributes[which(dataset_attributes$attribute == "doi"),2], 
+  Title = "Eurobarometer 79.2", 
+  Publisher = "GESIS", 
+  Creator = person("GESIS"))
+
+version(my_survey) <- dataset_attributes[which(dataset_attributes$attribute == "version"),2]
+
+#my_survey <- dataset_title_create(
+#Title = c("EUROBAROMETER 79.2
+# APRIL-MAY 2013",dataset_attributes[which(dataset_attributes$attribute == "studyno1"),2]), 
+#titleType = c("Title", "AlternativeTitle"))
+
+```
+
+```{r}
+summary(my_survey)
+```
+
+
+```{r}
+utils::toBibtex(bibentry_dataset(my_survey))
+```
+

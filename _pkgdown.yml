@@ -1,0 +1,45 @@
+url: ~
+template:
+  bootstrap: 5
+
+home:
+  links:
+  - text: http://surveydataset.dataobservatory.eu
+    href: http://surveydataset.dataobservatory.eu
+
+
+authors:
+  Daniel Antal:
+    href: https://reprex.nl/authors/daniel_antal/
+  Reprex:
+    href: https://reprex.nl/
+    html: <img src="https://reprex.nl/authors/admin/avatar_hud66277e7f64fbf44513e7a4881e2a94f_35557_270x270_fill_lanczos_center_2.png"
+      height="24" />
+
+
+
+articles:
+  - title: "Getting Started"
+    desc: >
+     This package is in an early development phase.
+    contents:
+    - intro
+  - title: "Motivation"
+    desc: >
+     Our `surveydataset` R package aims to help the Findability, Accessibility, Interoperability,
+         and Reuse of digital assets, particularly datacubes and datasets used in statistics and data
+         analysis.
+    contents:
+      - motivation
+
+reference:
+  - title: "Import"
+    desc: >
+      Import Surveys
+    contents:
+      - read_spss_declared
+  - title: "Dimension reduction"
+    desc: >
+      Create truly unique identifiers, and remove constants from the data frame.
+    contents:
+      - constant_to_attributes
