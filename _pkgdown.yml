@@ -38,6 +38,7 @@ reference:
       Import Surveys
     contents:
       - read_spss_declared
+      - survey
   - title: "Dimension reduction"
     desc: >
       Create truly unique identifiers, and remove constants from the data frame.

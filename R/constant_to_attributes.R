@@ -53,9 +53,9 @@ constant_to_attributes <- function(x,
 
   attr(x, which=attribute_name) <- dataset_attributes
 
-  return_value <- x[, ! names(x) %in% names(subsetted_df)]
+  x[, names(x) %in% names(subsetted_df)] <- NULL
 
-  return_value
+  x
 }
 
 

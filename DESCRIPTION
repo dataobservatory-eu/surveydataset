@@ -1,7 +1,7 @@
 Package: surveydataset
 Title: Findable, Accessible, Interoperable, and Reusable Survey Datasets
 Date: 2022-08-21
-Version: 0.1.0
+Version: 0.1.0.10
 Authors@R: 
     person(given = "Daniel", family = "Antal", 
            email = "daniel.antal@dataobservatory.eu", 

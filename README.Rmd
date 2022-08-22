@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/dataobservatory-eu/surveydataset?branch=master&svg=true)](https://ci.appveyor.com/project/dataobservatory-eu/surveydataset)
 <!-- badges: end -->
 
-The goal of the 'surveydataset' package is to create special datasets for social sciences surveys that are easier to release, exchange and reuse. 
+The goal of the 'surveydataset' package is to create special datasets for social sciences surveys that are easier to release, exchange and reuse. It builds on the [dataset](http://dataset.dataobservatory.eu/) package which creates data frames that have clear structural and referncial metadata to be used in statistical exchanges or placed in scientific repositories. The ‘surveydataset’ package extends this functionality with the pecularities of social sciences surveys, and offers a data frame like container to be used with [DDIwR](https://CRAN.R-project.org/package=DDIwR) for survey documentation and [retroharmonize](https://retroharmonize.dataobservatory.eu/) for the retrospective harmonization of survey datasets.
 
 ## Installation
 
@@ -52,51 +52,46 @@ We have created a wrapper around [haven::read_spss()](https://haven.tidyverse.or
 summary(as.factor(survey_raw$d25))
 summary(survey_raw$d25)
 ```
+
+The `read_spss_declared()` imports SPSS survey data into a [tibble](https://CRAN.R-project.org/package=tible), and changes the [labelled](https://CRAN.R-project.org/package=labelled) vectors (variable columns) to [declared](https://CRAN.R-project.org/package=declared) columns.
+
 ## Remove constans
 
 ```{r reduce-survey}
-my_survey <- survey_raw[, c(1:5, 7, 10:12, 33)] # Only to keep example easier to read
-head(my_survey)
+small_survey <- survey_raw[, c(1:6, 7, 10:14, 33)] # Only to keep example easier to read
+head(small_survey)
 ```
 
-```{r remove-constants}
-my_survey <- constant_to_attributes(x = my_survey, constant_columns = 1:5)
-head(my_survey)
-```
-
-```{r dataset-level-attributes}
-dataset_attributes <- attr(my_survey, "datasetAttributes")
-dataset_attributes
-```
 
 ```{r}
-library(dataset)
-my_survey <- dataset(
-  my_survey,
+my_survey <- survey(
+  small_survey,
   Dimensions = c("isocntry", "d25"),
-  Measures = "qb1_1", 
-  Attributes = "wextra", "caseid", 
-  Identifier =  dataset_attributes[which(dataset_attributes$attribute == "doi"),2], 
-  Title = "Eurobarometer 79.2", 
+  Measures = c("qb1_1","qb1_2", "qb1_3"), 
+  Attributes = c("wextra", "caseid"), 
+  Constants = c(1:5),
+  Identifier =  small_survey$doi[1], 
+  Label = as.character(as.factor(small_survey$survey[1])),
+  Title = "Eurobarometer 79.2 (Small Demo Sample)", 
   Publisher = "GESIS", 
+  Issued = substr("6.0.0 (2016-08-05)", 8, 17),
   Creator = person("GESIS"))
 
-version(my_survey) <- dataset_attributes[which(dataset_attributes$attribute == "version"),2]
-
-#my_survey <- dataset_title_create(
-#Title = c("EUROBAROMETER 79.2
-# APRIL-MAY 2013",dataset_attributes[which(dataset_attributes$attribute == "studyno1"),2]), 
-#titleType = c("Title", "AlternativeTitle"))
-
+dataset::version(my_survey) <- small_survey$version[1]
 ```
 
 ```{r summarize}
 summary(my_survey)
 ```
+```{r}
+my_attributes <- attributes(my_survey)
+my_attributes$names <- my_attributes$row.names <- NULL; 
+my_attributes
+```
 
 
-```{r citation}
-utils::toBibtex(bibentry_dataset(my_survey))
+```{r citation, eval=FALSE}
+utils::toBibtex(dataset::bibentry_dataset(my_survey))
 ```
 
 ## Further work
