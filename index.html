@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="index.html">surveydataset</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
 <div class="page-header"><h1 id="surveydataset">surveydataset<a class="anchor" aria-label="anchor" href="#surveydataset"></a>
 </h1></div>
 <!-- badges: start -->
-<p>The goal of the ‘surveydataset’ package is to create special datasets for social sciences surveys that are easier to release, exchange and reuse.</p>
+<p>The goal of the ‘surveydataset’ package is to create special datasets for social sciences surveys that are easier to release, exchange and reuse. It builds on the <a href="http://dataset.dataobservatory.eu/" class="external-link">dataset</a> package which creates data frames that have clear structural and referncial metadata to be used in statistical exchanges or placed in scientific repositories. The ‘surveydataset’ package extends this functionality with the pecularities of social sciences surveys, and offers a data frame like container to be used with <a href="https://CRAN.R-project.org/package=DDIwR" class="external-link">DDIwR</a> for survey documentation and <a href="https://retroharmonize.dataobservatory.eu/" class="external-link">retroharmonize</a> for the retrospective harmonization of survey datasets.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -93,96 +93,144 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">survey_raw</span><span class="op">$</span><span class="va">d25</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span><span class="co">#&gt;    1.00    1.00    2.00    1.91    2.25    3.00</span></span></code></pre></div>
+<p>The <code><a href="reference/read_spss_declared.html">read_spss_declared()</a></code> imports SPSS survey data into a <a href="https://CRAN.R-project.org/package=tible" class="external-link">tibble</a>, and changes the <a href="https://CRAN.R-project.org/package=labelled" class="external-link">labelled</a> vectors (variable columns) to <a href="https://CRAN.R-project.org/package=declared" class="external-link">declared</a> columns.</p>
 </div>
 <div class="section level2">
 <h2 id="remove-constans">Remove constans<a class="anchor" aria-label="anchor" href="#remove-constans"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_survey</span> <span class="op">&lt;-</span> <span class="va">survey_raw</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">10</span><span class="op">:</span><span class="fl">12</span>, <span class="fl">33</span><span class="op">)</span><span class="op">]</span> <span class="co"># Only to keep example easier to read</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
-<span><span class="co">#&gt;          studyno1       studyno2 doi   version     edition caseid isocn…¹ wextra</span></span>
-<span><span class="co">#&gt;         &lt;int+lbl&gt;      &lt;int+lbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;int+lbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 5688 [GESIS ST… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 752670 IT      43123.</span></span>
-<span><span class="co">#&gt; 2 5688 [GESIS ST… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 360001 LT       2287.</span></span>
-<span><span class="co">#&gt; 3 5688 [GESIS ST… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE…   3507 PT       8890.</span></span>
-<span><span class="co">#&gt; 4 5688 [GESIS ST… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE…    876 RO      14548.</span></span>
-<span><span class="co">#&gt; 5 5688 [GESIS ST… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE…    403 SI       2140.</span></span>
-<span><span class="co">#&gt; 6 5688 [GESIS ST… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE…   1759 DK       3887.</span></span>
-<span><span class="co">#&gt; # … with 2 more variables: qb1_1 &lt;int+lbl&gt;, d25 &lt;int+lbl&gt;, and abbreviated</span></span>
-<span><span class="co">#&gt; #   variable name ¹​isocntry</span></span>
+<code class="sourceCode R"><span><span class="va">small_survey</span> <span class="op">&lt;-</span> <span class="va">survey_raw</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">10</span><span class="op">:</span><span class="fl">14</span>, <span class="fl">33</span><span class="op">)</span><span class="op">]</span> <span class="co"># Only to keep example easier to read</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">small_survey</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 13</span></span>
+<span><span class="co">#&gt;           studyno1       studyno2 doi   version     edition        survey caseid</span></span>
+<span><span class="co">#&gt;          &lt;int+lbl&gt;      &lt;int+lbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;int+lbl&gt;     &lt;int+lbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 5688 [GESIS STU… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 792 [Eurobar… 752670</span></span>
+<span><span class="co">#&gt; 2 5688 [GESIS STU… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 792 [Eurobar… 360001</span></span>
+<span><span class="co">#&gt; 3 5688 [GESIS STU… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 792 [Eurobar…   3507</span></span>
+<span><span class="co">#&gt; 4 5688 [GESIS STU… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 792 [Eurobar…    876</span></span>
+<span><span class="co">#&gt; 5 5688 [GESIS STU… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 792 [Eurobar…    403</span></span>
+<span><span class="co">#&gt; 6 5688 [GESIS STU… 5688 [GESIS S… doi:… 6.0.0 … 2 [ARCHIVE… 792 [Eurobar…   1759</span></span>
+<span><span class="co">#&gt; # … with 6 more variables: isocntry &lt;chr&gt;, wextra &lt;dbl&gt;, qb1_1 &lt;int+lbl&gt;,</span></span>
+<span><span class="co">#&gt; #   qb1_2 &lt;int+lbl&gt;, qb1_3 &lt;int+lbl&gt;, d25 &lt;int+lbl&gt;</span></span>
 <span><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_survey</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/constant_to_attributes.html">constant_to_attributes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">my_survey</span>, constant_columns <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 5</span></span>
-<span><span class="co">#&gt;   caseid isocntry wextra                         qb1_1                       d25</span></span>
-<span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;                     &lt;int+lbl&gt;                 &lt;int+lbl&gt;</span></span>
-<span><span class="co">#&gt; 1 752670 IT       43123. 1 [Not in the last 12 months] 2 [Small/middle town]    </span></span>
-<span><span class="co">#&gt; 2 360001 LT        2287. 1 [Not in the last 12 months] 2 [Small/middle town]    </span></span>
-<span><span class="co">#&gt; 3   3507 PT        8890. 1 [Not in the last 12 months] 2 [Small/middle town]    </span></span>
-<span><span class="co">#&gt; 4    876 RO       14548. 1 [Not in the last 12 months] 1 [Rural area or village]</span></span>
-<span><span class="co">#&gt; 5    403 SI        2140. 1 [Not in the last 12 months] 2 [Small/middle town]    </span></span>
-<span><span class="co">#&gt; 6   1759 DK        3887. 3 [3-5 times]                 2 [Small/middle town]</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my_survey</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/survey.html">survey</a></span><span class="op">(</span></span>
+<span>  <span class="va">small_survey</span>,</span>
+<span>  Dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"isocntry"</span>, <span class="st">"d25"</span><span class="op">)</span>,</span>
+<span>  Measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"qb1_1"</span>,<span class="st">"qb1_2"</span>, <span class="st">"qb1_3"</span><span class="op">)</span>, </span>
+<span>  Attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wextra"</span>, <span class="st">"caseid"</span><span class="op">)</span>, </span>
+<span>  Constants <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>,</span>
+<span>  Identifier <span class="op">=</span>  <span class="va">small_survey</span><span class="op">$</span><span class="va">doi</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, </span>
+<span>  Label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">small_survey</span><span class="op">$</span><span class="va">survey</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  Title <span class="op">=</span> <span class="st">"Eurobarometer 79.2 (Small Demo Sample)"</span>, </span>
+<span>  Publisher <span class="op">=</span> <span class="st">"GESIS"</span>, </span>
+<span>  Issued <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="st">"6.0.0 (2016-08-05)"</span>, <span class="fl">8</span>, <span class="fl">17</span><span class="op">)</span>,</span>
+<span>  Creator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/person.html" class="external-link">person</a></span><span class="op">(</span><span class="st">"GESIS"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dataset</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dataset/man/version.html" class="external-link">version</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">small_survey</span><span class="op">$</span><span class="va">version</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dataset_attributes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">my_survey</span>, <span class="st">"datasetAttributes"</span><span class="op">)</span></span>
-<span><span class="va">dataset_attributes</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      survey        caseid         isocntry             wextra       </span></span>
+<span><span class="co">#&gt;  Min.   :792   Min.   :    18   Length:100         Min.   :  305.7  </span></span>
+<span><span class="co">#&gt;  1st Qu.:792   1st Qu.:  1287   Class :character   1st Qu.: 2955.1  </span></span>
+<span><span class="co">#&gt;  Median :792   Median :181058   Mode  :character   Median : 6688.8  </span></span>
+<span><span class="co">#&gt;  Mean   :792   Mean   :263517                      Mean   :13991.8  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:792   3rd Qu.:360175                      3rd Qu.:14649.0  </span></span>
+<span><span class="co">#&gt;  Max.   :792   Max.   :988853                      Max.   :79029.3  </span></span>
+<span><span class="co">#&gt;                                                                     </span></span>
+<span><span class="co">#&gt;      qb1_1           qb1_2          qb1_3           d25      </span></span>
+<span><span class="co">#&gt;  Min.   :1.000   Min.   :1.00   Min.   :1.00   Min.   :1.00  </span></span>
+<span><span class="co">#&gt;  1st Qu.:1.000   1st Qu.:1.00   1st Qu.:1.00   1st Qu.:1.00  </span></span>
+<span><span class="co">#&gt;  Median :1.000   Median :1.00   Median :1.00   Median :2.00  </span></span>
+<span><span class="co">#&gt;  Mean   :1.293   Mean   :1.65   Mean   :1.47   Mean   :1.91  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:1.000   3rd Qu.:2.00   3rd Qu.:2.00   3rd Qu.:2.25  </span></span>
+<span><span class="co">#&gt;  Max.   :4.000   Max.   :4.00   Max.   :4.00   Max.   :3.00  </span></span>
+<span><span class="co">#&gt;  NA's   :1</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_attributes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span></span>
+<span><span class="va">my_attributes</span><span class="op">$</span><span class="va">names</span> <span class="op">&lt;-</span> <span class="va">my_attributes</span><span class="op">$</span><span class="va">row.names</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>; </span>
+<span><span class="va">my_attributes</span></span>
+<span><span class="co">#&gt; $dimensions</span></span>
+<span><span class="co">#&gt;             names            class</span></span>
+<span><span class="co">#&gt; isocntry isocntry        character</span></span>
+<span><span class="co">#&gt; d25           d25 declared|integer</span></span>
+<span><span class="co">#&gt;                                                                                                                                                     isDefinedBy</span></span>
+<span><span class="co">#&gt; isocntry https://purl.org/linked-data/cube|https://raw.githubusercontent.com/UKGovLD/publishing-statistical-data/master/specs/src/main/vocab/sdmx-attribute.ttl</span></span>
+<span><span class="co">#&gt; d25      https://purl.org/linked-data/cube|https://raw.githubusercontent.com/UKGovLD/publishing-statistical-data/master/specs/src/main/vocab/sdmx-attribute.ttl</span></span>
+<span><span class="co">#&gt;                 codeList</span></span>
+<span><span class="co">#&gt; isocntry not yet defined</span></span>
+<span><span class="co">#&gt; d25      not yet defined</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $measures</span></span>
+<span><span class="co">#&gt;       names            class                       isDefinedBy       codeListe</span></span>
+<span><span class="co">#&gt; qb1_1 qb1_1 declared|integer https://purl.org/linked-data/cube not yet defined</span></span>
+<span><span class="co">#&gt; qb1_2 qb1_2 declared|integer https://purl.org/linked-data/cube not yet defined</span></span>
+<span><span class="co">#&gt; qb1_3 qb1_3 declared|integer https://purl.org/linked-data/cube not yet defined</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $attributes</span></span>
+<span><span class="co">#&gt;         names   class</span></span>
+<span><span class="co">#&gt; caseid caseid numeric</span></span>
+<span><span class="co">#&gt; wextra wextra numeric</span></span>
+<span><span class="co">#&gt;                                                                                                                                                   isDefinedBy</span></span>
+<span><span class="co">#&gt; caseid https://purl.org/linked-data/cube|https://raw.githubusercontent.com/UKGovLD/publishing-statistical-data/master/specs/src/main/vocab/sdmx-attribute.ttl</span></span>
+<span><span class="co">#&gt; wextra https://purl.org/linked-data/cube|https://raw.githubusercontent.com/UKGovLD/publishing-statistical-data/master/specs/src/main/vocab/sdmx-attribute.ttl</span></span>
+<span><span class="co">#&gt;              codeListe</span></span>
+<span><span class="co">#&gt; caseid not yet defined</span></span>
+<span><span class="co">#&gt; wextra not yet defined</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Type</span></span>
+<span><span class="co">#&gt;       resourceType resourceTypeGeneral</span></span>
+<span><span class="co">#&gt; 1 DCMITYPE:Dataset             Dataset</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Title</span></span>
+<span><span class="co">#&gt;                                    Title titleType</span></span>
+<span><span class="co">#&gt; 1 Eurobarometer 79.2 (Small Demo Sample)     Title</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Identifier</span></span>
+<span><span class="co">#&gt; [1] "doi:10.4232/1.12577"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Creator</span></span>
+<span><span class="co">#&gt; [1] "GESIS"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Source</span></span>
+<span><span class="co">#&gt; [1] NA</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Publisher</span></span>
+<span><span class="co">#&gt; [1] NA</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Rights</span></span>
+<span><span class="co">#&gt; [1] NA</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Description</span></span>
+<span><span class="co">#&gt; [1] NA</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Size</span></span>
+<span><span class="co">#&gt; [1] "33.08 kB [32.3 KiB]"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Date</span></span>
+<span><span class="co">#&gt; [1] "2022-08-22"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $datasetAttributes</span></span>
 <span><span class="co">#&gt;   attribute                 value</span></span>
 <span><span class="co">#&gt; 1  studyno1 GESIS STUDY ID ZA5688</span></span>
 <span><span class="co">#&gt; 2  studyno2 GESIS STUDY ID ZA5688</span></span>
 <span><span class="co">#&gt; 3       doi   doi:10.4232/1.12577</span></span>
 <span><span class="co">#&gt; 4   version    6.0.0 (2016-08-05)</span></span>
-<span><span class="co">#&gt; 5   edition       ARCHIVE EDITION</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dataobservatory-eu/dataset" class="external-link">dataset</a></span><span class="op">)</span></span>
-<span><span class="va">my_survey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dataset/man/dataset.html" class="external-link">dataset</a></span><span class="op">(</span></span>
-<span>  <span class="va">my_survey</span>,</span>
-<span>  Dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"isocntry"</span>, <span class="st">"d25"</span><span class="op">)</span>,</span>
-<span>  Measures <span class="op">=</span> <span class="st">"qb1_1"</span>, </span>
-<span>  Attributes <span class="op">=</span> <span class="st">"wextra"</span>, <span class="st">"caseid"</span>, </span>
-<span>  Identifier <span class="op">=</span>  <span class="va">dataset_attributes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dataset_attributes</span><span class="op">$</span><span class="va">attribute</span> <span class="op">==</span> <span class="st">"doi"</span><span class="op">)</span>,<span class="fl">2</span><span class="op">]</span>, </span>
-<span>  Title <span class="op">=</span> <span class="st">"Eurobarometer 79.2"</span>, </span>
-<span>  Publisher <span class="op">=</span> <span class="st">"GESIS"</span>, </span>
-<span>  Creator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/person.html" class="external-link">person</a></span><span class="op">(</span><span class="st">"GESIS"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/dataset/man/version.html" class="external-link">version</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">dataset_attributes</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dataset_attributes</span><span class="op">$</span><span class="va">attribute</span> <span class="op">==</span> <span class="st">"version"</span><span class="op">)</span>,<span class="fl">2</span><span class="op">]</span></span>
-<span></span>
-<span><span class="co">#my_survey &lt;- dataset_title_create(</span></span>
-<span><span class="co">#Title = c("EUROBAROMETER 79.2</span></span>
-<span><span class="co"># APRIL-MAY 2013",dataset_attributes[which(dataset_attributes$attribute == "studyno1"),2]), </span></span>
-<span><span class="co">#titleType = c("Title", "AlternativeTitle"))</span></span></code></pre></div>
+<span><span class="co">#&gt; 5   edition       ARCHIVE EDITION</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $class</span></span>
+<span><span class="co">#&gt; [1] "dataset"    "data.frame"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Version</span></span>
+<span><span class="co">#&gt; [1] "6.0.0 (2016-08-05)"</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      caseid         isocntry             wextra            qb1_1      </span></span>
-<span><span class="co">#&gt;  Min.   :    18   Length:100         Min.   :  305.7   Min.   :1.000  </span></span>
-<span><span class="co">#&gt;  1st Qu.:  1287   Class :character   1st Qu.: 2955.1   1st Qu.:1.000  </span></span>
-<span><span class="co">#&gt;  Median :181058   Mode  :character   Median : 6688.8   Median :1.000  </span></span>
-<span><span class="co">#&gt;  Mean   :263517                      Mean   :13991.8   Mean   :1.293  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:360175                      3rd Qu.:14649.0   3rd Qu.:1.000  </span></span>
-<span><span class="co">#&gt;  Max.   :988853                      Max.   :79029.3   Max.   :4.000  </span></span>
-<span><span class="co">#&gt;                                                        NA's   :1      </span></span>
-<span><span class="co">#&gt;       d25      </span></span>
-<span><span class="co">#&gt;  Min.   :1.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:1.00  </span></span>
-<span><span class="co">#&gt;  Median :2.00  </span></span>
-<span><span class="co">#&gt;  Mean   :1.91  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:2.25  </span></span>
-<span><span class="co">#&gt;  Max.   :3.00  </span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/toLatex.html" class="external-link">toBibtex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dataset/man/bibentry_dataset.html" class="external-link">bibentry_dataset</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; @Misc{,</span></span>
-<span><span class="co">#&gt;   title = {Eurobarometer 79.2},</span></span>
-<span><span class="co">#&gt;   author = {{GESIS}},</span></span>
-<span><span class="co">#&gt;   publisher = {GESIS},</span></span>
-<span><span class="co">#&gt;   size = {19.62 kB [19.16 KiB]},</span></span>
-<span><span class="co">#&gt; }</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/toLatex.html" class="external-link">toBibtex</a></span><span class="op">(</span><span class="fu">dataset</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dataset/man/bibentry_dataset.html" class="external-link">bibentry_dataset</a></span><span class="op">(</span><span class="va">my_survey</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="further-work">Further work<a class="anchor" aria-label="anchor" href="#further-work"></a>
 </h2>
 <p>The <code>surveydataset</code> package is in a very early stage of its development. For citations please refer to the current development version as:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">'surveydataset'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To cite surveydataset in publications use:</span></span>
